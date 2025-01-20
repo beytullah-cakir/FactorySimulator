@@ -5,5 +5,7 @@ public class Crop : ScriptableObject
 {
     public string productName;
     public float growTime = 10f;
+
+    public int level;
    
 }

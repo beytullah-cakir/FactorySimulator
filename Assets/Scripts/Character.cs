@@ -12,10 +12,13 @@ public class Character : MonoBehaviour
     private Vector2 moveInput;
     private PlayerInputActions inputActions;
 
+    private Animator anm;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         inputActions = new PlayerInputActions();
+        anm=GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -39,28 +42,30 @@ public class Character : MonoBehaviour
 
     private void Update()
     {
-        // Calculate the direction to move
+        //karakterin hareketi
         Vector3 direction = new Vector3(moveInput.x, 0, moveInput.y).normalized;
 
-        // Move the character
+        // karakterin dönüşü ve ileri gitmesi
         if (direction.magnitude >= 0.1f)
         {
-            // Calculate the target angle
+            
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            // Smoothly rotate the character
+            
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSpeed, 0.1f);
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
-            // Move the character forward
+           
             Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             controller.Move(moveDirection * speed * Time.deltaTime);
         }
 
-        // Apply gravity
+        // yerçekimi
         if (controller.isGrounded && velocity.y < 0)
         {
             velocity.y = -2f;
         }
+
+        anm.SetBool("Run", direction.magnitude >= 0.1f);
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);

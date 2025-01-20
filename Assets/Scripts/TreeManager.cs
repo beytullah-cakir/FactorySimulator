@@ -20,12 +20,13 @@ public class TreeManager : MonoBehaviour
             growProgressBar.maxValue = crop.growTime;
             growProgressBar.value = currentGrowTime;
         }
-
+        //Ürün envanteri oluştur
         cropInventory= CropInventory.Instance;
     }
 
     void Update()
     {
+        // Eğer ekin tamamen büyümediyse büyüt
         if (!isFullyGrown)
         {
             Grow();
@@ -58,8 +59,11 @@ public class TreeManager : MonoBehaviour
     {
         if (isFullyGrown)
         {
+            // Ekin sayısını artır
             cropInventory.AddProduct(crop.productName, cropCount);
+            // Ekin sayısını sıfırla
             currentGrowTime = 0f;
+            // Ekinin büyüme durumunu sıfırla
             isFullyGrown = false;
 
             // Slider'ı sıfırla
@@ -68,16 +72,14 @@ public class TreeManager : MonoBehaviour
                 growProgressBar.value = currentGrowTime;
             }
         }
-        else
-        {
-            Debug.Log("Ekin henüz hazır değil!");
-        }
+        
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            // Eğer ekin tamamen büyüdüyse hasat et
             Harvest();
         }
     }

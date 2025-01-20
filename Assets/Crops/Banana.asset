@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productName: banana
   growTime: 20
+  level: 5

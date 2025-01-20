@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     //ürün adetlerini gösteren textler
     public TextMeshProUGUI appleCountText;
     public TextMeshProUGUI bananaCountText;
+
+    //singleton
     public static UIManager Instance;
 
     CropInventory cropInventory;    
@@ -27,6 +29,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        //ürün envanterini oluştur
         cropInventory = CropInventory.Instance;
     }
 
@@ -37,6 +40,7 @@ public class UIManager : MonoBehaviour
 
     public void UpdateProductCount()
     {
+        //ürün adetlerini güncelle
         if (appleCountText != null && bananaCountText != null)
         {
             appleCountText.text = $"Apple: {cropInventory.GetProductCount("apple")}";

@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class CropBasket : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int maxCropCount = 10;//sepetin alabileceği maksimum ürün sayısı
+    public int currentCropCount = 0;//sepetin içindeki ürün sayısı
 
-    // Update is called once per frame
-    void Update()
+    //sepete ürün eklemek için kullanılan fonksiyon
+    public void AddCrop()
     {
-        
+        if (currentCropCount < maxCropCount)
+        {
+            currentCropCount++;
+        }
     }
-
+    
+    //sepetten ürün çıkarmak için kullanılan fonksiyon
+    public void RemoveCrop()
+    {
+        if (currentCropCount > 0)
+        {
+            currentCropCount--;
+        }
+    }
 }

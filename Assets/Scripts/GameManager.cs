@@ -1,35 +1,50 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public int currentLevel = 1;
+    public List<Crop> crops = new List<Crop>();
+
+    //singleton
+    private static GameManager _instance;
+
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = new GameManager();
+            }
+
+            return _instance;
+        }
+    }
+
+    private List<Crop> currentCropList = new List<Crop>();
+
+
+    public List<Crop> GetCurrentCrops()
+    {
+        return currentCropList;
+    }
     
-    //ürün adetlerini tutan değişkenler
-    public int appleCount;
-    public int bananaCount;
-
-    public static GameManager Instance;
-
-    void Awake()
+    public void ManageCrops()
     {
-        if (Instance == null)
+        foreach (var crop in crops)
         {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
+            if (crop.level <= currentLevel && !currentCropList.Contains(crop))
+            {
+                currentCropList.Add(crop);
+            }
         }
     }
 
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        ManageCrops();
+        
         
     }
 }
