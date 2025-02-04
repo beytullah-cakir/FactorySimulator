@@ -389,10 +389,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelDesign
       objectReference: {fileID: 0}
-    - target: {fileID: 2917019072277495597, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: edaa653a8bc7f364a9c5e341ff090f56, type: 2}
     - target: {fileID: 4056572410039098571, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -431,10 +427,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4056572410039098571, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7382572475501411332, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
-      propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
