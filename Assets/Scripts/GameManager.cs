@@ -1,50 +1,63 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    //mevcut level
     public int currentLevel = 1;
-    public List<Crop> crops = new List<Crop>();
 
     //singleton
-    private static GameManager _instance;
+    public static GameManager Instance;
+    //mevcut ürünlerin listesi
+    private readonly List<Crop> currentCrops=new();
 
-    public static GameManager Instance
+
+    //ürünlere ait olan bahçe veya ağaçların listesi
+    public List<GameObject> crops;
+
+    void Awake()
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = new GameManager();
-            }
-
-            return _instance;
-        }
+        Instance = this;
     }
 
-    private List<Crop> currentCropList = new List<Crop>();
 
 
+
+    //mevcut ürünlerin listesini döndürür
     public List<Crop> GetCurrentCrops()
     {
-        return currentCropList;
+        return currentCrops;
     }
-    
+
+    //eğer ürünün leveli mevcut levelden küçükse mevcut ürünlerin listesine ekler
     public void ManageCrops()
     {
         foreach (var crop in crops)
         {
-            if (crop.level <= currentLevel && !currentCropList.Contains(crop))
+            Crop _crop = crop.GetComponent<GardenManager>().crop;
+            if (_crop.level <= currentLevel && !currentCrops.Contains(_crop))
             {
-                currentCropList.Add(crop);
+                currentCrops.Add(_crop);
+                crop.SetActive(true);
             }
         }
     }
 
+
+    public bool IsActive(Crop crop)
+    {
+        return crop.level <= currentLevel;
+    }
+
+
+
     void Update()
     {
         ManageCrops();
-        
-        
+        if (Input.GetKeyDown(KeyCode.Space)) currentLevel++;
+
     }
 }

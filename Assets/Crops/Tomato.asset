@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6cc3245faeaed642b975cda02fd476b, type: 3}
-  m_Name: Orange
+  m_Name: Tomato
   m_EditorClassIdentifier: 
-  productName: orange
-  growTime: 10
-  level: 3
+  productName: tomato
+  growTime: 15
+  level: 7

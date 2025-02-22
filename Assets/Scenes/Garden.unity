@@ -389,6 +389,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelDesign
       objectReference: {fileID: 0}
+    - target: {fileID: 3691021126555955259, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4056572410039098571, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -427,6 +431,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4056572410039098571, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6672611071923282985, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8040842445068707048, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8995746420851350903, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9032697099628990549, guid: c11c12a7c21a5d347a2e9fc7bb990616, type: 3}
+      propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -15,3 +15,5 @@ MonoBehaviour:
   productName: apple
   growTime: 5
   level: 1
+  gameObject: {fileID: 6618080368738123024, guid: b66677b35fa8b584f9a24f49d3bb4fd8, type: 3}
+  maxStandAmount: 8

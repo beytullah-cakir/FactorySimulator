@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Character : MonoBehaviour
 {
-   public float speed = 5.0f;
+    public float speed = 5.0f;
     public float rotationSpeed = 700.0f;
     public float gravity = -9.81f;
 
@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         inputActions = new PlayerInputActions();
-        anm=GetComponent<Animator>();
+        anm = GetComponent<Animator>();
     }
 
     private void OnEnable()
@@ -48,13 +48,13 @@ public class Character : MonoBehaviour
         // karakterin dönüşü ve ileri gitmesi
         if (direction.magnitude >= 0.1f)
         {
-            
+
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            
+
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSpeed, 0.1f);
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
-           
+
             Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             controller.Move(moveDirection * speed * Time.deltaTime);
         }
@@ -70,5 +70,8 @@ public class Character : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
+
+
     
+
 }
