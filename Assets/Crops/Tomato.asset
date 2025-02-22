@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productName: tomato
   growTime: 15
-  level: 7
+  level: 5
+  gameObject: {fileID: 9181114499055503715, guid: 5caaffe1d8b3d724689d7979a9528f1d, type: 3}

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productName: potato
   growTime: 20
-  level: 5
+  level: 7
+  gameObject: {fileID: 368669931317050133, guid: 28ba9b653292c6b4a8ed3d84555d8c96, type: 3}

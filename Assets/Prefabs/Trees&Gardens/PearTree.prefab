@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1244108823059424163}
   - component: {fileID: 2580662359901071524}
   m_Layer: 5
-  m_Name: OrangeCanvas
+  m_Name: PearCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 8908647707376829179}
   - component: {fileID: 385879923471147249}
   m_Layer: 5
-  m_Name: OrangeSlider
+  m_Name: PearSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -443,7 +443,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2cc206bb7ee6175499c5ef5a683bb68f, type: 3}
       propertyPath: m_Name
-      value: OrangeTree
+      value: PearTree
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2cc206bb7ee6175499c5ef5a683bb68f, type: 3}
       propertyPath: m_IsActive
@@ -453,6 +453,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 9b317f7606e172d45869f200b53a2880, type: 2}
+    - target: {fileID: 7729213793789891890, guid: 2cc206bb7ee6175499c5ef5a683bb68f, type: 3}
+      propertyPath: m_Name
+      value: PearTree
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -492,6 +496,7 @@ MonoBehaviour:
   isFullyGrown: 0
   growProgressBar: {fileID: 385879923471147249}
   cropCount: 10
+  currentCropCount: 0
   crop: {fileID: 11400000, guid: 8c735fece64a08747adb0352203c1ec7, type: 2}
 --- !u!136 &264217812529422783
 CapsuleCollider:

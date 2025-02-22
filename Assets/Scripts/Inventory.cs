@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 public class Inventory : MonoBehaviour
 {
     // Singleton
@@ -12,7 +13,9 @@ public class Inventory : MonoBehaviour
 
     public Transform backpackAnchor; // Elmaların sırtında dizileceği nokta
     public int capacity = 5;
-    public static List<Crop> cropsList = new List<Crop>();
+    private readonly List<Crop> cropsList = new();
+
+    public int pos = 0;
 
 
 
@@ -23,7 +26,7 @@ public class Inventory : MonoBehaviour
 
 
 
-    public void SpawnApple(int cropCount, Crop crop, GardenManager garden)
+    public void SpawnCrop(int cropCount, Crop crop, GardenManager garden)
     {
         int appleCount = Mathf.Min(cropCount, capacity - cropsList.Count); // Kapasiteyi aşmamak için kontrol
 
@@ -39,11 +42,16 @@ public class Inventory : MonoBehaviour
             GameObject apple = Instantiate(crop.gameObject, backpackAnchor.position, Quaternion.identity);
             apple.transform.SetParent(backpackAnchor);
 
-            // Elmalar üst üste dizilir
-            Vector3 offset = new Vector3(0, cropsList.Count * 0.5f, 0);
-            apple.transform.localPosition = offset;
 
+            Vector3 offset = new(0, pos + 2, -1);
+            pos++;
+            apple.transform.localPosition = offset;
             cropsList.Add(crop);
+
+
+
+
+
         }
         Debug.Log($"{crop.productName} eklendi! Envanterde {cropsList.Count}/{capacity} ürün var.");
 
@@ -57,17 +65,16 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void DestroyProduct(int count)
+    public void DestroyCrop(int count)
     {
-        
 
-        for (int i = 0; i <count; i++) // Belirlenen kadar obje yok et
+        for (int i = 0; i < count; i++)
         {
-            if (backpackAnchor.childCount > 0)
-            {
-                ;
-                Destroy(backpackAnchor.GetChild(i).gameObject);
-            }
+
+            Destroy(backpackAnchor.GetChild(pos - 1).gameObject);
+            cropsList.RemoveAt(0);
+            pos--;
+
         }
     }
 

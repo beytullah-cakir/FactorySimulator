@@ -56,7 +56,7 @@ public class GardenManager : MonoBehaviour
     {
         if (isFullyGrown && currentCropCount > 0)
         {
-            cropInventory.SpawnApple(currentCropCount, crop, this);
+            cropInventory.SpawnCrop(currentCropCount, crop, this);
 
             // Eğer hala ürün kaldıysa büyümeyi sıfırlama
             if (currentCropCount > 0)
@@ -85,4 +85,6 @@ public class GardenManager : MonoBehaviour
             Harvest();
         }
     }
+
+    
 }

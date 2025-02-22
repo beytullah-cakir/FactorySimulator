@@ -10,7 +10,5 @@ public class Crop : ScriptableObject
 
     public GameObject gameObject;
 
-    public int maxStandAmount;
-
    
 }

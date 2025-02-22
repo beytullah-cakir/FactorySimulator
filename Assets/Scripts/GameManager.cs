@@ -12,15 +12,20 @@ public class GameManager : MonoBehaviour
     //singleton
     public static GameManager Instance;
     //mevcut ürünlerin listesi
-    private readonly List<Crop> currentCrops=new();
+    private readonly List<Crop> currentCrops = new();
 
 
     //ürünlere ait olan bahçe veya ağaçların listesi
     public List<GameObject> crops;
 
+    public GameObject customerObject;
+
+    public Transform startPos, grocerPos, avoidPos;
+
     void Awake()
     {
         Instance = this;
+        ManageCrops();
     }
 
 
@@ -59,5 +64,26 @@ public class GameManager : MonoBehaviour
         ManageCrops();
         if (Input.GetKeyDown(KeyCode.Space)) currentLevel++;
 
+        // Konsola hangi ürünlerin aktarıldığını yaz
+        foreach (var product in StandManager.standInventory)
+        {
+            print($"Standdaki ürün sayısı: {product.Key.productName} x{product.Value}");
+        }
+        
+
     }
+
+    void Start()
+    {
+        SpawnCustomer();
+    }
+
+    public void SpawnCustomer()
+    {
+
+        GameObject customer = Instantiate(customerObject);
+        customer.transform.position = startPos.position;
+
+    }
+
 }

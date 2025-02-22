@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 4de59a9dd10f648488531b34ec0f5220
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285494
+  packageName: Low poly Farm (fruits and vegetables)
+  packageVersion: 1.0
+  assetPath: Assets/Low poly Farm/Models/fence_1.fbx
+  uploadId: 673610
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -16,8 +23,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -35,7 +40,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -107,10 +112,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 285494
-  packageName: Low poly Farm (fruits and vegetables)
-  packageVersion: 1.0
-  assetPath: Assets/Low poly Farm/Models/fence_1.fbx
-  uploadId: 673610

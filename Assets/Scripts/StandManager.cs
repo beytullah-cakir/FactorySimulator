@@ -3,9 +3,21 @@ using UnityEngine;
 
 public class StandManager : MonoBehaviour
 {
-    Dictionary<Crop, int> transferredProducts = new Dictionary<Crop, int>(); // Standa aktarılan ürünleri saymak için
+    public static Dictionary<Crop, int> standInventory = new Dictionary<Crop, int>(); // Standa aktarılan ürünleri saymak için
     public int capacity; // Standın alabileceği maksimum ürün sayısı
     private int currentStandCount = 0; // Şu anda standda bulunan ürün sayısı
+
+    public static StandManager Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    void Update()
+    {
+        
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,23 +53,36 @@ public class StandManager : MonoBehaviour
             if (transferred >= transferLimit)
                 break; // Kapasite dolduysa dur
 
-            inventory.GetCropList().RemoveAt(0); // Envanterden kaldır
+            
             transferred++;
             currentStandCount++; // Standdaki ürün sayısını güncelle
 
-            if (transferredProducts.ContainsKey(crop))
-                transferredProducts[crop]++;
+            if (standInventory.ContainsKey(crop))
+                standInventory[crop]++;
             else
-                transferredProducts[crop] = 1;
+                standInventory[crop] = 1;
         }
 
         // Sadece kapasite kadar fiziksel objeyi yok et
-        inventory.DestroyProduct(transferred);
+        inventory.DestroyCrop(transferred);
 
-        // Konsola hangi ürünlerin aktarıldığını yaz
-        foreach (var product in transferredProducts)
+        
+        
+    }
+
+
+    public void OrderCrop(Crop crop, int count)
+    {
+        if (standInventory.ContainsKey(crop) && count<=standInventory[crop])
         {
-            Debug.Log($"Standdaki ürün sayısı: {product.Key.productName} x{product.Value}");
+            for (int i = 0; i < count; i++)
+            {
+                standInventory[crop]--;
+                
+            }
+
+            print($"müşteriye {count} adet {crop.productName} verildi");            
+            CustomerManager.isOrdered=true;
         }
     }
 }
