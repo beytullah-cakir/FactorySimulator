@@ -15,7 +15,7 @@ public class Inventory : MonoBehaviour
     public int capacity = 5;
     private readonly List<Crop> cropsList = new();
 
-    public int pos = 0;
+    public int currentAmount = 0;
 
 
 
@@ -43,8 +43,8 @@ public class Inventory : MonoBehaviour
             apple.transform.SetParent(backpackAnchor);
 
 
-            Vector3 offset = new(0, pos + 2, -1);
-            pos++;
+            Vector3 offset = new(0, currentAmount + 2, -1);
+            currentAmount++;
             apple.transform.localPosition = offset;
             cropsList.Add(crop);
 
@@ -71,9 +71,9 @@ public class Inventory : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
 
-            Destroy(backpackAnchor.GetChild(pos - 1).gameObject);
+            Destroy(backpackAnchor.GetChild(currentAmount - 1).gameObject);
             cropsList.RemoveAt(0);
-            pos--;
+            currentAmount--;
 
         }
     }

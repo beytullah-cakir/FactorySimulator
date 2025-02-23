@@ -1,23 +1,22 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class StandManager : MonoBehaviour
 {
     public static Dictionary<Crop, int> standInventory = new Dictionary<Crop, int>(); // Standa aktarılan ürünleri saymak için
     public int capacity; // Standın alabileceği maksimum ürün sayısı
-    private int currentStandCount = 0; // Şu anda standda bulunan ürün sayısı
+    public int currentStandCount = 0; // Şu anda standda bulunan ürün sayısı
 
     public static StandManager Instance;
+
+    
 
     void Awake()
     {
         Instance = this;
     }
 
-    void Update()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -41,7 +40,6 @@ public class StandManager : MonoBehaviour
         int transferLimit = capacity - currentStandCount;
         if (transferLimit <= 0)
         {
-            Debug.Log("Stand dolu! Daha fazla ürün eklenemez.");
             return;
         }
 
@@ -78,11 +76,11 @@ public class StandManager : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 standInventory[crop]--;
-                
+                currentStandCount--;
+                GameManager.Instance.coin+=crop.orderCost;
             }
-
-            print($"müşteriye {count} adet {crop.productName} verildi");            
-            CustomerManager.isOrdered=true;
+                    
+            CustomerManager.Instance.isOrdered=true;
         }
     }
 }

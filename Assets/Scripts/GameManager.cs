@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //mevcut level
-    public int currentLevel = 1;
 
     //singleton
     public static GameManager Instance;
@@ -21,6 +19,12 @@ public class GameManager : MonoBehaviour
     public GameObject customerObject;
 
     public Transform startPos, grocerPos, avoidPos;
+
+    public List<GardenManager> cropList;
+
+
+
+    public int coin;
 
     void Awake()
     {
@@ -43,47 +47,74 @@ public class GameManager : MonoBehaviour
         foreach (var crop in crops)
         {
             Crop _crop = crop.GetComponent<GardenManager>().crop;
-            if (_crop.level <= currentLevel && !currentCrops.Contains(_crop))
+            if (crop.activeSelf && !currentCrops.Contains(_crop))
             {
                 currentCrops.Add(_crop);
-                crop.SetActive(true);
+
             }
         }
     }
 
 
-    public bool IsActive(Crop crop)
-    {
-        return crop.level <= currentLevel;
-    }
 
 
 
     void Update()
     {
         ManageCrops();
-        if (Input.GetKeyDown(KeyCode.Space)) currentLevel++;
 
-        // Konsola hangi ürünlerin aktarıldığını yaz
-        foreach (var product in StandManager.standInventory)
-        {
-            print($"Standdaki ürün sayısı: {product.Key.productName} x{product.Value}");
-        }
-        
+
 
     }
 
     void Start()
     {
         SpawnCustomer();
+
     }
 
     public void SpawnCustomer()
     {
-
         GameObject customer = Instantiate(customerObject);
         customer.transform.position = startPos.position;
 
+        CustomerManager newCustomer = customer.GetComponent<CustomerManager>();
+        newCustomer.SetPositions(grocerPos, avoidPos);
+        newCustomer.isOrdered = false;
+    }
+
+
+
+
+    public void BuyCrop(GameObject currentObject, GameObject area)
+    {
+        Crop currentCrop = currentObject.GetComponent<GardenManager>().crop;
+        if (coin >= currentCrop.buyCost)
+        {
+            coin -= currentCrop.buyCost;
+            currentObject.SetActive(true);
+            Destroy(area);
+        }
+
+    }
+
+    public void UpgradeCapacity(string info, int increaseAmount)
+    {
+        switch (info)
+        {
+            case "player":
+                Inventory.Instance.capacity += increaseAmount;
+                break;
+            case "stand":
+                StandManager.Instance.capacity = increaseAmount;
+                break;
+        }
+    }
+
+
+    public void UpgradeCropOrderCost(Crop crop, int increaseAmount)
+    {
+        crop.orderCost += increaseAmount;
     }
 
 }

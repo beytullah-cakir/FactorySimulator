@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   productName: apple
-  growTime: 5
+  growTime: 1
   level: 1
   gameObject: {fileID: 3845055963443732030, guid: 4d667a7ceecdf714285080c2bd35a1ed, type: 3}
-  maxStandAmount: 8
+  orderCost: 5
+  buyCost: 0

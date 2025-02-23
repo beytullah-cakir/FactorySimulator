@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
     private Vector2 moveInput;
     private PlayerInputActions inputActions;
 
+    public static Character Instance;
+
     private Animator anm;
 
     private void Awake()

@@ -15,6 +15,8 @@ public class GardenManager : MonoBehaviour
 
     Inventory cropInventory;
 
+    
+
     void Start()
     {
         if (growProgressBar != null)
@@ -61,11 +63,10 @@ public class GardenManager : MonoBehaviour
             // Eğer hala ürün kaldıysa büyümeyi sıfırlama
             if (currentCropCount > 0)
             {
-                Debug.Log("Ağaçta hala ürün var, büyüme sıfırlanmayacak.");
+                return;
             }
             else
             {
-                Debug.Log("Ağaçtaki tüm ürünler alındı, yeniden büyümeye başlıyor...");
                 currentCropCount=cropCount;
                 isFullyGrown = false;
                 currentGrowTime = 0;
