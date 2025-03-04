@@ -4,18 +4,18 @@ using System.Collections;
 
 public class GardenManager : MonoBehaviour
 {
-    private float currentGrowTime = 0f;
+    public float currentGrowTime = 0f;
     public bool isFullyGrown = false;
     public Slider growProgressBar;
 
     public int cropCount; // Ağaçtaki toplam ürün miktarı
 
     public int currentCropCount;
-    public Crop crop; 
+    public Crop crop;
 
     Inventory cropInventory;
 
-    
+    public bool isPlayerInArea = false;  // Alanın içinde olup olmadığını kontrol etmek için bir flag
 
     void Start()
     {
@@ -24,7 +24,7 @@ public class GardenManager : MonoBehaviour
             growProgressBar.maxValue = crop.growTime;
             growProgressBar.value = currentGrowTime;
         }
-        currentCropCount=cropCount;
+        currentCropCount = cropCount;
         cropInventory = Inventory.Instance;
     }
 
@@ -34,6 +34,8 @@ public class GardenManager : MonoBehaviour
         {
             Grow();
         }
+
+       
     }
 
     public void Grow()
@@ -58,34 +60,29 @@ public class GardenManager : MonoBehaviour
     {
         if (isFullyGrown && currentCropCount > 0)
         {
-            cropInventory.SpawnCrop(currentCropCount, crop, this);
-
-            // Eğer hala ürün kaldıysa büyümeyi sıfırlama
-            if (currentCropCount > 0)
-            {
-                return;
-            }
-            else
-            {
-                currentCropCount=cropCount;
-                isFullyGrown = false;
-                currentGrowTime = 0;
-
-                if (growProgressBar != null)
-                {
-                    growProgressBar.value = currentGrowTime;
-                }
-            }
+            StartCoroutine(cropInventory.SpawnCropWithDelay(currentCropCount, crop, this));
+            
         }
     }
 
+
+    // Eğer oyuncu alanın içine girerse ürün toplayabilir
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            isPlayerInArea=true;
             Harvest();
         }
     }
 
-    
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInArea=false;
+        }
+    }
+
+
 }

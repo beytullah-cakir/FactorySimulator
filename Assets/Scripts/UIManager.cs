@@ -13,7 +13,7 @@ public class UIManager : MonoBehaviour
     tomatoCost,
     tomatoAmount,
     potatoCost,
-    potatoAmount,   
+    potatoAmount,
     standCapacity
 
     ;
@@ -50,16 +50,22 @@ public class UIManager : MonoBehaviour
     {
         cropInventory = Inventory.Instance;
         gameManager = GameManager.Instance;
-        standManager=StandManager.Instance;
+        standManager = StandManager.Instance;
 
     }
 
     void Update()
     {
         coin.text = $"{GameManager.Instance.coin}";
-        
-        standCapacity.text=$"{standManager.currentStandCount}/{standManager.capacity}";
 
+        standCapacity.text = $"{standManager.currentStandCount}/{standManager.capacity}";
+
+
+
+    }
+
+    void Demo()
+    {
         foreach (var garden in gameManager.cropList)
         {
             Crop currentCrop = garden.crop;
@@ -86,7 +92,6 @@ public class UIManager : MonoBehaviour
 
             }
         }
-
     }
 
     string CostText(int info)
