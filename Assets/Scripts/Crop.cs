@@ -13,5 +13,7 @@ public class Crop : ScriptableObject
 
     public int buyCost;
 
+    public int upgradeCost;
+
    
 }

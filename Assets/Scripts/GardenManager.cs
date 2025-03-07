@@ -15,7 +15,11 @@ public class GardenManager : MonoBehaviour
 
     Inventory cropInventory;
 
+    public Transform spawnPoint;
+
+
     public bool isPlayerInArea = false;  // Alanın içinde olup olmadığını kontrol etmek için bir flag
+
 
     void Start()
     {

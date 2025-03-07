@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Apple
   m_EditorClassIdentifier: 
   productName: apple
-  growTime: 1
+  growTime: 5
   level: 1
   gameObject: {fileID: 3845055963443732030, guid: 4d667a7ceecdf714285080c2bd35a1ed, type: 3}
-  orderCost: 5
+  orderCost: 15
   buyCost: 0
+  upgradeCost: 350

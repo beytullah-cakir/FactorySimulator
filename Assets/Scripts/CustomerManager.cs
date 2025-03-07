@@ -1,10 +1,16 @@
 using System.Linq.Expressions;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CustomerManager : MonoBehaviour
 {
     private Transform grocerPos, avoidPos;
+
+    public Slider waitSlider;
+
+    public float waitTimer;
+    private float currentWaitTimer = 0;
 
     public TextMeshProUGUI orderDeatil;
 
@@ -21,7 +27,7 @@ public class CustomerManager : MonoBehaviour
 
     private Animator anm;
 
-    public Vector3 direction = Vector3.left;
+    public Vector3 direction;
 
 
 
@@ -33,6 +39,10 @@ public class CustomerManager : MonoBehaviour
 
     void Start()
     {
+
+        waitSlider.maxValue = waitTimer;
+        waitSlider.minValue = currentWaitTimer;
+
         rnd = Random.Range(0, GameManager.Instance.GetCurrentCrops().Count);
         count = Random.Range(5, 10);
         currentCrop = GameManager.Instance.GetCurrentCrops()[rnd];
@@ -43,15 +53,42 @@ public class CustomerManager : MonoBehaviour
 
     }
 
+    public void WaitTimer()
+    {
+        if (currentWaitTimer < waitTimer)
+        {
+            currentWaitTimer += Time.deltaTime;
+
+            if (waitSlider != null)
+            {
+                waitSlider.value = currentWaitTimer;
+            }
+
+            if (currentWaitTimer >= waitTimer)
+            {
+                isOrdered=false;
+            }
+        }
+    }
+
 
     void Update()
     {
+
         if (!isOrdered)
         {
-            MoveToGrocer();
+            MoveCustomer();
+            speed = 8;
+
         }
 
-        else AvoidFromGrocer();
+        else if (isOrdered)
+        {
+            WaitTimer();
+            StandManager.Instance.OrderCrop(currentCrop, count, this);
+            speed = 0;
+        }
+
 
 
     }
@@ -59,19 +96,13 @@ public class CustomerManager : MonoBehaviour
 
 
 
-    void MoveToGrocer()
+    void MoveCustomer()
     {
-        //transform.position = Vector3.MoveTowards(transform.position, grocerPos.position, speed * Time.deltaTime);
-        transform.position += speed * Time.deltaTime * new Vector3(direction.x, 0, direction.z);        
+
+        transform.position += speed * Time.deltaTime * new Vector3(direction.x, direction.y, direction.z);
         anm.SetBool("Idle", false);
     }
 
-    void AvoidFromGrocer()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, avoidPos.position, speed * Time.deltaTime);
-        anm.SetBool("Idle", false);
-
-    }
 
     public void SetPositions(Transform grocer, Transform avoid)
     {
@@ -85,7 +116,8 @@ public class CustomerManager : MonoBehaviour
         {
             case "Stand":
                 anm.SetBool("Idle", true);
-                StandManager.Instance.OrderCrop(currentCrop, count);
+                isOrdered = true;
+
                 break;
             case "End":
                 GameManager.Instance.SpawnCustomer();

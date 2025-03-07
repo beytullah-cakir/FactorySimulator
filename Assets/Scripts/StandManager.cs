@@ -14,7 +14,7 @@ public class StandManager : MonoBehaviour
 
     public static StandManager Instance;
 
-    
+
 
     void Awake()
     {
@@ -26,7 +26,7 @@ public class StandManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInArea=true;
+            isPlayerInArea = true;
             StartCoroutine(TransferProducts());
         }
     }
@@ -35,7 +35,7 @@ public class StandManager : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            isPlayerInArea=false;
+            isPlayerInArea = false;
             StopAllCoroutines();
         }
     }
@@ -59,9 +59,11 @@ public class StandManager : MonoBehaviour
         List<Crop> crops = new List<Crop>(inventory.GetCropList()); // Listeyi kopyala
         int transferred = 0;
 
-        foreach (Crop crop in crops)
+        for (int i = crops.Count - 1; i >= 0; i--)
         {
-            if (transferred >= transferLimit || !isPlayerInArea) 
+            Crop crop = crops[i];
+
+            if (transferred >= transferLimit || !isPlayerInArea)
                 break; // Kapasite dolduysa veya oyuncu alanı terk ettiyse dur
 
             transferred++;
@@ -85,7 +87,7 @@ public class StandManager : MonoBehaviour
         }
     }
 
-    
+
     private IEnumerator MoveCropToStand(GameObject cropObj, int index)
     {
         Vector3 startPos = cropObj.transform.position;
@@ -105,18 +107,16 @@ public class StandManager : MonoBehaviour
     }
 
 
-    public void OrderCrop(Crop crop, int count)
+    public void OrderCrop(Crop crop, int count, CustomerManager customerManager)
     {
-        if (standInventory.ContainsKey(crop) && count<=standInventory[crop])
+        if (standInventory.ContainsKey(crop) && count <= standInventory[crop])
         {
-            for (int i = 0; i < count; i++)
-            {
-                standInventory[crop]--;
-                currentStandCount--;
-                GameManager.Instance.coin+=crop.orderCost;
-            }
-                    
-            CustomerManager.Instance.isOrdered=true;
+
+            standInventory[crop] -= count;
+            currentStandCount -= count;
+            GameManager.Instance.coin += crop.orderCost * count;
+            customerManager.isOrdered = false;
+
         }
     }
 }

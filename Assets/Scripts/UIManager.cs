@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +15,18 @@ public class UIManager : MonoBehaviour
     tomatoAmount,
     potatoCost,
     potatoAmount,
-    standCapacity
+    standCapacity,
+    standDetails,
+    playerCapacity,
+    unlockTomatoGarden,
+    unlockPotatoGarden,
+    unlockPearTree,
+    upgradeApple,
+    upgradeTotamo,
+    upgradePotato,
+    upgradePear,
+    upgradePlayerCap,
+    upgradeStandCap
 
     ;
 
@@ -30,6 +42,8 @@ public class UIManager : MonoBehaviour
     GameManager gameManager;
 
     StandManager standManager;
+   
+    Crop crops;
 
 
     private void Awake()
@@ -51,21 +65,30 @@ public class UIManager : MonoBehaviour
         cropInventory = Inventory.Instance;
         gameManager = GameManager.Instance;
         standManager = StandManager.Instance;
+        
+        
 
     }
 
     void Update()
     {
         coin.text = $"{GameManager.Instance.coin}";
+        playerCapacity.text = $"{cropInventory.capacity}";
+        upgradePlayerCap.text=$"{gameManager.upgradePlayerCapCost}$";
+        upgradeStandCap.text=$"{gameManager.upgradeStandCapCost}$";
+        
 
-        standCapacity.text = $"{standManager.currentStandCount}/{standManager.capacity}";
 
-
+        UpgradeMenuTexts();
+        StandDetails();
 
     }
 
-    void Demo()
+    void UpgradeMenuTexts()
     {
+        standCapacity.text = $"{standManager.capacity}";
+
+
         foreach (var garden in gameManager.cropList)
         {
             Crop currentCrop = garden.crop;
@@ -73,35 +96,53 @@ public class UIManager : MonoBehaviour
             {
                 case "apple":
                     appleCost.text = CostText(currentCrop.orderCost);
-                    appleAmount.text = AmountText(garden.cropCount);
+                    appleAmount.text = GrowTime(currentCrop.growTime);
+                    upgradeApple.text=$"{currentCrop.upgradeCost}$";                 
                     break;
                 case "pear":
                     pearCost.text = CostText(currentCrop.orderCost);
-                    pearAmount.text = AmountText(garden.cropCount);
+                    pearAmount.text = GrowTime(currentCrop.growTime);
+                    unlockPearTree.text=$"{currentCrop.buyCost}$";
+                    upgradePear.text=$"{currentCrop.upgradeCost}$";
                     break;
                 case "tomato":
                     tomatoCost.text = CostText(currentCrop.orderCost);
-                    tomatoAmount.text = AmountText(garden.cropCount);
+                    tomatoAmount.text = GrowTime(currentCrop.growTime);
+                    unlockTomatoGarden.text=$"{currentCrop.buyCost}$";
+                    upgradeTotamo.text=$"{currentCrop.upgradeCost}$";
                     break;
                 case "potato":
                     potatoCost.text = CostText(currentCrop.orderCost);
-                    potatoAmount.text = AmountText(garden.cropCount);
+                    potatoAmount.text = GrowTime(currentCrop.growTime);
+                    unlockPotatoGarden.text=$"{currentCrop.buyCost}$";
+                    upgradePotato.text=$"{currentCrop.upgradeCost}$";
                     break;
-
-
 
             }
         }
     }
 
-    string CostText(int info)
+
+    public void StandDetails()
     {
-        return $"Cost: {info}";
+
+        standDetails.text = $"{standManager.currentStandCount}/{standManager.capacity}\n";
+
+        foreach (var entry in StandManager.standInventory)
+        {
+            standDetails.text += $"{entry.Key.productName}:{entry.Value}\n";
+        }
+
     }
 
-    string AmountText(int info)
+    string CostText(int info)
     {
-        return $"Amount: {info}";
+        return $"Cost: {info}$";
+    }
+
+    string GrowTime(float info)
+    {
+        return $"GrowTime: {info}sn";
     }
 
 

@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - GreenGrocer
-  - Grocer
   - End
+  - Stand
   layers:
   - Default
   - TransparentFX

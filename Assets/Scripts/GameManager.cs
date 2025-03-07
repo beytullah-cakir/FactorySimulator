@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public List<GardenManager> cropList;
 
+    public int upgradePlayerCapCost, upgradeStandCapCost;
+
 
 
     public int coin;
@@ -50,7 +52,6 @@ public class GameManager : MonoBehaviour
             if (crop.activeSelf && !currentCrops.Contains(_crop))
             {
                 currentCrops.Add(_crop);
-
             }
         }
     }
@@ -81,6 +82,7 @@ public class GameManager : MonoBehaviour
         CustomerManager newCustomer = customer.GetComponent<CustomerManager>();
         newCustomer.SetPositions(grocerPos, avoidPos);
         newCustomer.isOrdered = false;
+
     }
 
 
@@ -98,23 +100,47 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void UpgradeCapacity(string info, int increaseAmount)
+    public void UpgradeCapacity(string info)
     {
-        switch (info)
+
+        if (info == "player" && coin >= upgradePlayerCapCost)
         {
-            case "player":
-                Inventory.Instance.capacity += increaseAmount;
-                break;
-            case "stand":
-                StandManager.Instance.capacity = increaseAmount;
-                break;
+            Inventory.Instance.capacity += 5;
+            coin -= upgradePlayerCapCost;
+            upgradePlayerCapCost += 150;
         }
+
+
+        else if (info == "stand" && coin >= upgradeStandCapCost)
+        {
+            coin -= upgradeStandCapCost;
+            upgradeStandCapCost += 150;
+            StandManager.Instance.capacity += 10;
+        }
+
+
+
     }
 
 
-    public void UpgradeCropOrderCost(Crop crop, int increaseAmount)
-    {
-        crop.orderCost += increaseAmount;
+    public void UpgradeCropOrderCost(GardenManager gardenManager)
+    {        
+        if (coin >= gardenManager.crop.upgradeCost)
+        {            
+            gardenManager.crop.orderCost += 5;
+            coin -= gardenManager.crop.upgradeCost;
+            if (gardenManager.crop.growTime > 1)
+            {
+                gardenManager.crop.growTime -= 1;
+                gardenManager.growProgressBar.maxValue=gardenManager.crop.growTime;
+            }
+            gardenManager.crop.upgradeCost += 100;
+
+        }
+
     }
+
+
+
 
 }

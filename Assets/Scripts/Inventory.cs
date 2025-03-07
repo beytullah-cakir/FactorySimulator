@@ -53,7 +53,7 @@ public class Inventory : MonoBehaviour
 
         while(currentCropCount>0 && garden.isPlayerInArea)
         {
-            GameObject currentObj = Instantiate(crop.gameObject, garden.transform.localPosition, Quaternion.identity);
+            GameObject currentObj = Instantiate(crop.gameObject, garden.spawnPoint.position, Quaternion.identity);
             currentObj.transform.SetParent(backpackAnchor);
             StartCoroutine(MoveCropToBackpack(currentObj));
             cropsList.Add(crop);
