@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,45 +5,21 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     public TextMeshProUGUI
-    coin,
-    appleCost,
-    appleAmount,
-    pearCost,
-    pearAmount,
-    tomatoCost,
-    tomatoAmount,
-    potatoCost,
-    potatoAmount,
-    standCapacity,
-    standDetails,
-    playerCapacity,
-    unlockTomatoGarden,
-    unlockPotatoGarden,
-    unlockPearTree,
-    upgradeApple,
-    upgradeTotamo,
-    upgradePotato,
-    upgradePear,
-    upgradePlayerCap,
-    upgradeStandCap
-
-    ;
+        coin, appleCost, appleAmount, pearCost, pearAmount,
+        tomatoCost, tomatoAmount, potatoCost, potatoAmount,
+        standCapacity, standDetails, playerCapacity,
+        unlockTomatoGarden, unlockPotatoGarden, unlockPearTree,
+        upgradeApple, upgradeTomato, upgradePotato, upgradePear,
+        upgradePlayerCap, upgradeStandCap;
 
     public GameObject upgradePanel;
-
     public bool isOpenUpgradePanel;
-
-
 
     public static UIManager Instance;
 
-    Inventory cropInventory;
-    GameManager gameManager;
-
-    StandManager standManager;
-   
-    Crop crops;
-
+    private Inventory cropInventory;
+    private GameManager gameManager;
+    private StandManager standManager;
 
     private void Awake()
     {
@@ -57,7 +32,6 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     private void Start()
@@ -65,91 +39,87 @@ public class UIManager : MonoBehaviour
         cropInventory = Inventory.Instance;
         gameManager = GameManager.Instance;
         standManager = StandManager.Instance;
-        
-        
-
     }
 
     void Update()
     {
-        coin.text = $"{GameManager.Instance.coin}";
-        playerCapacity.text = $"{cropInventory.capacity}";
-        upgradePlayerCap.text=$"{gameManager.upgradePlayerCapCost}$";
-        upgradeStandCap.text=$"{gameManager.upgradeStandCapCost}$";
-        
+        if (gameManager == null || cropInventory == null || standManager == null) return;
 
-
-        UpgradeMenuTexts();
-        StandDetails();
-
+        UpdateUI();
     }
 
-    void UpgradeMenuTexts()
+    void UpdateUI()
     {
+        coin.text = $"{gameManager.coin}$";
+        playerCapacity.text = $"{cropInventory.capacity}";
+        upgradePlayerCap.text = $"{gameManager.upgradePlayerCapCost}$";
+        upgradeStandCap.text = $"{gameManager.upgradeStandCapCost}$";
         standCapacity.text = $"{standManager.capacity}";
 
+        UpdateCropInfo();
+        UpdateStandDetails();
+    }
 
+    void UpdateCropInfo()
+    {
         foreach (var garden in gameManager.cropList)
         {
+            if (garden.crop == null) continue;
+
             Crop currentCrop = garden.crop;
-            switch (currentCrop.productName)
+            string costText = CostText(currentCrop.orderCost);
+            string growTimeText = GrowTime(currentCrop.growTime);
+            string buyCostText = $"{currentCrop.buyCost}$";
+            string upgradeCostText = $"{currentCrop.upgradeCost}$";
+
+            switch (currentCrop.productName.ToLower())
             {
                 case "apple":
-                    appleCost.text = CostText(currentCrop.orderCost);
-                    appleAmount.text = GrowTime(currentCrop.growTime);
-                    upgradeApple.text=$"{currentCrop.upgradeCost}$";                 
+                    appleCost.text = costText;
+                    appleAmount.text = growTimeText;
+                    upgradeApple.text = upgradeCostText;
                     break;
                 case "pear":
-                    pearCost.text = CostText(currentCrop.orderCost);
-                    pearAmount.text = GrowTime(currentCrop.growTime);
-                    unlockPearTree.text=$"{currentCrop.buyCost}$";
-                    upgradePear.text=$"{currentCrop.upgradeCost}$";
+                    pearCost.text = costText;
+                    pearAmount.text = growTimeText;
+                    unlockPearTree.text = buyCostText;
+                    upgradePear.text = upgradeCostText;
                     break;
                 case "tomato":
-                    tomatoCost.text = CostText(currentCrop.orderCost);
-                    tomatoAmount.text = GrowTime(currentCrop.growTime);
-                    unlockTomatoGarden.text=$"{currentCrop.buyCost}$";
-                    upgradeTotamo.text=$"{currentCrop.upgradeCost}$";
+                    tomatoCost.text = costText;
+                    tomatoAmount.text = growTimeText;
+                    unlockTomatoGarden.text = buyCostText;
+                    upgradeTomato.text = upgradeCostText;
                     break;
                 case "potato":
-                    potatoCost.text = CostText(currentCrop.orderCost);
-                    potatoAmount.text = GrowTime(currentCrop.growTime);
-                    unlockPotatoGarden.text=$"{currentCrop.buyCost}$";
-                    upgradePotato.text=$"{currentCrop.upgradeCost}$";
+                    potatoCost.text = costText;
+                    potatoAmount.text = growTimeText;
+                    unlockPotatoGarden.text = buyCostText;
+                    upgradePotato.text = upgradeCostText;
                     break;
-
             }
         }
     }
 
-
-    public void StandDetails()
+    void UpdateStandDetails()
     {
-
         standDetails.text = $"{standManager.currentStandCount}/{standManager.capacity}\n";
 
         foreach (var entry in StandManager.standInventory)
         {
-            standDetails.text += $"{entry.Key.productName}:{entry.Value}\n";
+            if (entry.Key != null)
+            {
+                standDetails.text += $"{entry.Key.productName}: {entry.Value}\n";
+            }
         }
-
     }
 
-    string CostText(int info)
-    {
-        return $"Cost: {info}$";
-    }
+    string CostText(int cost) => $"Cost: {cost}$";
+    string GrowTime(float time) => $"GrowTime: {time} sec";
 
-    string GrowTime(float info)
-    {
-        return $"GrowTime: {info}sn";
-    }
-
-
-    public void UpgradePanel()
+    public void ToggleUpgradePanel()
     {
         isOpenUpgradePanel = !isOpenUpgradePanel;
         upgradePanel.SetActive(isOpenUpgradePanel);
     }
-
 }

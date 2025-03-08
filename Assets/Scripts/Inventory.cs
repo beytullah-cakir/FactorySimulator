@@ -7,6 +7,14 @@ public class Inventory : MonoBehaviour
     // Singleton
     public static Inventory Instance;
 
+    AudioManager audioManager;
+
+
+    void Start()
+    {
+        audioManager=AudioManager.Instance;
+    }
+
     void Awake()
     {
         Instance = this;
@@ -60,6 +68,7 @@ public class Inventory : MonoBehaviour
             garden.currentCropCount--;
             yield return new WaitForSeconds(0.2f); // 0.1 saniye arayla ekle
             currentCropCount--;
+            audioManager.PlaySound(audioManager.collectItem);
         }
 
         if (garden.currentCropCount == 0)

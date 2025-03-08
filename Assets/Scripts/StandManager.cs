@@ -14,6 +14,14 @@ public class StandManager : MonoBehaviour
 
     public static StandManager Instance;
 
+    AudioManager audioManager;
+
+
+    void Start()
+    {
+        audioManager=AudioManager.Instance;
+    }
+
 
 
     void Awake()
@@ -68,6 +76,7 @@ public class StandManager : MonoBehaviour
 
             transferred++;
             currentStandCount++; // Standdaki ürün sayısını güncelle
+            audioManager.PlaySound(audioManager.collectItem);
 
             if (standInventory.ContainsKey(crop))
                 standInventory[crop]++;
@@ -111,7 +120,7 @@ public class StandManager : MonoBehaviour
     {
         if (standInventory.ContainsKey(crop) && count <= standInventory[crop])
         {
-
+            audioManager.PlaySound(audioManager.payment);
             standInventory[crop] -= count;
             currentStandCount -= count;
             GameManager.Instance.coin += crop.orderCost * count;

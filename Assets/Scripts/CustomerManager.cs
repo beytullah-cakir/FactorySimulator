@@ -39,7 +39,7 @@ public class CustomerManager : MonoBehaviour
 
     void Start()
     {
-
+        
         waitSlider.maxValue = waitTimer;
         waitSlider.minValue = currentWaitTimer;
 

@@ -16,7 +16,12 @@ public class Character : MonoBehaviour
 
     private Animator anm;
 
-    
+    AudioManager audioManager;
+
+    private float stepTimer = 0f;
+    public float stepInterval = 0.5f; // Adım sesi her 0.5 saniyede bir çalınacak
+
+
 
     private void Awake()
     {
@@ -44,23 +49,37 @@ public class Character : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
 
+    void Start()
+    {
+        audioManager = AudioManager.Instance;
+    }
+
     private void Update()
     {
         //karakterin hareketi
         Vector3 direction = new Vector3(moveInput.x, 0, moveInput.y).normalized;
 
         // karakterin dönüşü ve ileri gitmesi
-        if (direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f) // Karakter hareket ediyorsa
         {
-
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref rotationSpeed, 0.1f);
             transform.rotation = Quaternion.Euler(0, angle, 0);
 
-
             Vector3 moveDirection = Quaternion.Euler(0, targetAngle, 0) * Vector3.forward;
             controller.Move(moveDirection * speed * Time.deltaTime);
+
+            // Adım sesini belirli aralıklarla çal
+            stepTimer -= Time.deltaTime;
+            if (stepTimer <= 0f)
+            {
+                audioManager.PlaySound(audioManager.footStep);
+                stepTimer = stepInterval; // Zamanı sıfırla
+            }
+        }
+        else
+        {
+            stepTimer = 0f; // Karakter durduğunda timer'ı sıfırla
         }
 
         // yerçekimi
@@ -76,6 +95,6 @@ public class Character : MonoBehaviour
     }
 
 
-    
+
 
 }

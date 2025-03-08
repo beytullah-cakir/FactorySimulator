@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Pear
   m_EditorClassIdentifier: 
   productName: pear
-  growTime: 15
+  growTime: 10
   level: 3
   gameObject: {fileID: 3132199660145537488, guid: 05cea341048a7f34c903f3a22224115e, type: 3}
-  orderCost: 15
+  orderCost: 10
   buyCost: 250
   upgradeCost: 350
